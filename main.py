@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 
+from api.routers.product_router import product_routes
 from db.database import Base, engine
 
 Base.metadata.create_all(engine)
 
 
 app = FastAPI()
+app.include_router(product_routes)
 
 
 @app.get("/")

@@ -21,7 +21,7 @@ class Product(Base):
     sale_price = Column(Integer)
     rating = Column(Float)
     feedbacks = Column(Integer)
-    colors = Column(Integer)
+    colors = Column(String)
 
 
 SessionLocal = sessionmaker(autoflush=False, bind=engine)
