@@ -1,3 +1,6 @@
+import requests
+
+
 def get_basket_id(product_id: int) -> str:
     short_id = product_id // 100000
 
@@ -29,3 +32,16 @@ def get_basket_id(product_id: int) -> str:
         basket = "13"
 
     return basket
+
+
+def get_product_card(product_id):
+    url = f"https://card.wb.ru/cards/v1/detail?appType=1&curr=rub&dest=-1257786&spp=30&nm={product_id}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        json_data = response.json()
+        product = json_data["data"]["products"]
+
+        return product
+    else:
+        print("Ошибка при получении товара:", response.status_code)
