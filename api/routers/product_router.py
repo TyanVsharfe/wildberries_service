@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 import requests
 
-from api.models.Product import CreateProductModel
+from api.models.Product import ProductModel
 from api.service import product_service
 from api.utils import utils
 from api.utils.utils import get_basket_id, get_product_category
@@ -32,7 +32,7 @@ def add_product(product_id: int):
     print(categories[0])
     print(categories[1])
 
-    product_model = CreateProductModel(
+    product_model = ProductModel(
         nm_id=product[0]["id"],
         name=product[0]["name"],
         brand=product[0]["brand"],
@@ -58,7 +58,7 @@ def update_product(product_id: int):
     product = utils.get_product_card(product_id)
     categories = get_product_category(product_id)
 
-    product_model = CreateProductModel(
+    product_model = ProductModel(
         nm_id=product[0]["id"],
         name=product[0]["name"],
         brand=product[0]["brand"],

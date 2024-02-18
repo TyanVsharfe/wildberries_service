@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class CreateProductModel(BaseModel):
+class ProductModel(BaseModel):
     nm_id: int
     name: str
     brand: str
@@ -16,6 +16,15 @@ class CreateProductModel(BaseModel):
     rating: float
     feedbacks: int
     colors: Optional[str]
+    category: str
+    root_category: str
+
+
+class ProductCategoryModel(BaseModel):
+    nm_id: int
+    name: str
+    brand: str
+    sale_price: int
     category: str
     root_category: str
 

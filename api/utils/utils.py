@@ -28,8 +28,16 @@ def get_basket_id(product_id: int) -> str:
         basket = "11"
     elif 1656 <= short_id <= 1919:
         basket = "12"
-    else:
+    elif 1920 <= short_id <= 2163:
         basket = "13"
+    elif 2164 <= short_id <= 2407:
+        basket = "14"
+    elif 2408 <= short_id <= 2651:
+        basket = "15"
+    elif 2652 <= short_id <= 2895:
+        basket = "16"
+    elif 2896 <= short_id <= 3139:
+        basket = "17"
 
     return basket
 

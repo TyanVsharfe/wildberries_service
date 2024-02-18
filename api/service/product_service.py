@@ -1,9 +1,10 @@
+import json
 from datetime import datetime, timedelta
 import requests
 from sqlalchemy import func
 from starlette.responses import JSONResponse
 
-from api.models.Product import CreateProductModel
+from api.models.Product import ProductModel, ProductCategoryModel
 from api.utils import utils
 from api.utils.utils import get_basket_id
 from db.database import SessionLocal, Product
@@ -25,7 +26,7 @@ def get_products():
         db.close()
 
 
-def create_product(new_product: CreateProductModel):
+def create_product(new_product: ProductModel):
     db = SessionLocal()
     try:
         product = Product(
@@ -51,7 +52,7 @@ def create_product(new_product: CreateProductModel):
         db.close()
 
 
-def update_product(new_product: CreateProductModel):
+def update_product(new_product: ProductModel):
     db = SessionLocal()
     try:
         product = db.query(Product).filter(Product.nm_id == new_product.nm_id).first()
@@ -97,9 +98,6 @@ def get_products_count():
 def get_products_count_by_category():
     db = SessionLocal()
     try:
-        categories = db.query(Product.category).distinct().all()
-
-        # Группируем товары по категории и считаем количество
         products_by_category = db.query(
             Product.category, func.count(Product.nm_id)
         ).group_by(Product.category).all()
@@ -112,11 +110,65 @@ def get_products_count_by_category():
             }
             for row in products_by_category
         ]
-        print(data)
+        # print(data)
 
         return JSONResponse(data)
     finally:
         db.close()
+
+
+def get_products_categories():
+    db = SessionLocal()
+    try:
+        products_by_category = db.query(
+            Product.category, func.count(Product.nm_id)
+        ).group_by(Product.category).all()
+        print(products_by_category)
+
+        data = [
+            {
+                "category": row[0],
+                "count": row[1],
+            }
+            for row in products_by_category
+        ]
+        # print(data)
+
+        return JSONResponse(data)
+    finally:
+        db.close()
+
+
+def get_products_by_category(product_id: int):
+    db = SessionLocal()
+    try:
+        product = db.query(Product).filter(Product.nm_id == product_id).first()
+        print(product)
+        products = db.query(Product).filter(Product.category == product.category).all()
+
+        categories = db.query(Product).filter(Product.nm_id == product_id).distinct("category").all()
+        brands = db.query(Product).filter(Product.nm_id == product_id).distinct("brand").all()
+
+        data_c = [{"category": category.category} for category in categories]
+        data_b = [{"brand": brand.brand} for brand in brands]
+
+        print(data_c, data_b)
+    finally:
+        db.close()
+
+    product_data = []
+    for product in products:
+        product_dict = ProductCategoryModel(
+            nm_id=product.nm_id,
+            name=product.name,
+            brand=product.brand,
+            sale_price=product.sale_price,
+            category=product.category,
+            root_category=product.root_category
+        )
+        product_data.append(product_dict)
+    print(product_data)
+    return product_data, data_c, data_b
 
 
 def get_history(product_id: int):
