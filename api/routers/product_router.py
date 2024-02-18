@@ -4,7 +4,7 @@ import requests
 from api.models.Product import CreateProductModel
 from api.service import product_service
 from api.utils import utils
-from api.utils.utils import get_basket_id
+from api.utils.utils import get_basket_id, get_product_category
 
 product_routes = APIRouter()
 
@@ -27,6 +27,10 @@ def get_product_history(product_id: int):
 @product_routes.post("/{product_id}")
 def add_product(product_id: int):
     product = utils.get_product_card(product_id)
+    categories = get_product_category(product_id)
+    print(categories)
+    print(categories[0])
+    print(categories[1])
 
     product_model = CreateProductModel(
         nm_id=product[0]["id"],
@@ -40,7 +44,9 @@ def add_product(product_id: int):
         sale_price=product[0]["salePriceU"] / 100,
         rating=product[0]["rating"],
         feedbacks=product[0]["feedbacks"],
-        colors=product[0]["colors"][0]["name"]
+        colors=product[0]["colors"][0]["name"] if len(product[0]["colors"]) > 0 else None,
+        category=categories[0],
+        root_category=categories[1]
     )
 
     product_service.create_product(product_model)
@@ -50,6 +56,7 @@ def add_product(product_id: int):
 @product_routes.put("/{product_id}")
 def update_product(product_id: int):
     product = utils.get_product_card(product_id)
+    categories = get_product_category(product_id)
 
     product_model = CreateProductModel(
         nm_id=product[0]["id"],
@@ -63,10 +70,12 @@ def update_product(product_id: int):
         sale_price=product[0]["salePriceU"] / 100,
         rating=product[0]["rating"],
         feedbacks=product[0]["feedbacks"],
-        colors=product[0]["colors"][0]["name"]
+        colors=product[0]["colors"][0]["name"],
+        category=categories[0],
+        root_category=categories[1]
     )
 
-    product_service.create_product(product_model)
+    product_service.update_product(product_model)
     return product_model.name
 
 

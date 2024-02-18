@@ -23,6 +23,9 @@ class Product(Base):
     feedbacks = Column(Integer)
     colors = Column(String)
 
+    category = Column(String)
+    root_category = Column(String)
+
     def to_json(self):
         return {
             "nm_id": self.nm_id,

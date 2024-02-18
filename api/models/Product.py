@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -13,6 +15,8 @@ class CreateProductModel(BaseModel):
     sale_price: int
     rating: float
     feedbacks: int
-    colors: str
+    colors: Optional[str]
+    category: str
+    root_category: str
 
 

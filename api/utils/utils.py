@@ -45,3 +45,18 @@ def get_product_card(product_id):
         return product
     else:
         print("Ошибка при получении товара:", response.status_code)
+
+
+def get_product_category(product_id):
+    url = f"https://basket-{get_basket_id(product_id)}.wbbasket.ru/vol{product_id // 100000}/part{product_id // 1000}/{product_id}/info/ru/card.json"
+    print(url)
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        json_data = response.json()
+        category = json_data["subj_name"]
+        root_category = json_data["subj_root_name"]
+
+        return category, root_category
+    else:
+        print("Ошибка при получении товара:", response.status_code)
