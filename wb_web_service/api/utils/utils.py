@@ -1,6 +1,6 @@
 import requests
 
-from web_service.api.models.Product import ProductModel
+from wb_web_service.api.models.Product import ProductModel
 
 
 def get_product_card(product_id):

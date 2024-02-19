@@ -3,11 +3,11 @@ import requests
 from sqlalchemy import func
 from starlette.responses import JSONResponse
 
-from web_service.api.models.Product import ProductModel, ProductCategoryModel
-from web_service.api.routers import product_router
-from web_service.api.utils import utils
-from web_service.api.utils.utils import get_basket_id
-from web_service.db.database import SessionLocal, Product
+from wb_web_service.api.models.Product import ProductModel, ProductCategoryModel
+from wb_web_service.api.routers import product_router
+from wb_web_service.api.utils import utils
+from wb_web_service.api.utils.utils import get_basket_id
+from wb_web_service.db.database import SessionLocal, Product
 
 
 def get_product(product_id: int):

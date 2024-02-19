@@ -3,7 +3,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:///database.db', connect_args={"check_same_thread": False})
+from wb_web_service.config import settings
+
+engine = create_engine(f'postgresql://{settings.DB_USER}:{settings.DB_PASSWORD}@{settings.DB_HOST}/{settings.DB_NAME}')
 Base = declarative_base()
 
 

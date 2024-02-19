@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  wb_service:
+    container_name: "wb_web_service"
+    build:
+      dockerfile: ./wb_web_service/Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    networks:
+      - wb
+  wb_tg_bot:
+    container_name: "wb_tg_bot"
+    build:
+      dockerfile: ./wb_tg_bot/Dockerfile
+    ports:
+      - "8005:8005"
+    env_file:
+      - .env
+    environment:
+      - API_SERVER=http://wb_service:8000
+    networks:
+      - wb
+  wb_db:
+    container_name: "wb_db"
+    image: postgres:15-alpine
+    restart: on-failure
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=wb_db
+      - POSTGRES_HOST=localhost
+      - POSTGRES_PORT=5432
+    volumes:
+      - ./wb_db_data:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+    networks:
+      - wb
+
+networks:
+  wb:
+    driver: bridge

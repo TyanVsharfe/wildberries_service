@@ -12,8 +12,8 @@ class Settings:
     DB_PASSWORD = os.getenv("DB_PASSWORD")
     DB_HOST = os.getenv("DB_HOST")
     DB_NAME = os.getenv("DB_NAME")
-    SERVER_PORT: int = 8000
     API_SERVER = os.getenv("API_SERVER")
+    API_NAME = os.getenv("API_NAME")
 
 
 settings = Settings()

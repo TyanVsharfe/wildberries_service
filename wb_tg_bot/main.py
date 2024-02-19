@@ -6,8 +6,8 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import BotCommand
 
-from tg_bot.config import settings
-from tg_bot.handlers import product_handlers, stats_handlers
+from wb_tg_bot.config import settings
+from wb_tg_bot.handlers import product_handlers, stats_handlers
 
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=settings.BOT_TOKEN)

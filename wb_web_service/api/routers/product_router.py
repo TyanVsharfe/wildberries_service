@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from web_service.api.service import product_service
-from web_service.api.utils.utils import get_product_model
+from wb_web_service.api.service import product_service
+from wb_web_service.api.utils.utils import get_product_model
 
 product_routes = APIRouter()
 

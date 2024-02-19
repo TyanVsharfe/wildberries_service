@@ -8,7 +8,7 @@ from aiogram.filters import CommandObject
 from aiogram import types
 from aiogram.types import FSInputFile
 
-from tg_bot.config import settings
+from wb_tg_bot.config import settings
 
 
 async def cmd_get_product_history(message: types.Message, command: CommandObject):

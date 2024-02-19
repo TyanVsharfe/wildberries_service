@@ -7,7 +7,7 @@ from aiogram.filters import CommandObject
 from aiogram import types
 from aiogram.types import FSInputFile
 
-from tg_bot.config import settings
+from wb_tg_bot.config import settings
 
 
 async def cmd_get_product(message: types.Message, command: CommandObject):
@@ -66,6 +66,7 @@ async def cmd_add_product(message: types.Message, command: CommandObject):
     except ValueError:
         return await message.answer("Ошибка: не переданы аргументы или они не в том формате (<product_id:int>)")
     finally:
+        print(f"{settings.API_SERVER}/api/products/{product_id}")
         response = requests.post(f"{settings.API_SERVER}/api/products/{product_id}")
         if response.status_code != 200 or response.text is None:
             return await message.answer(
