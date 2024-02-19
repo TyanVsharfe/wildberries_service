@@ -1,13 +1,13 @@
-import json
 from datetime import datetime, timedelta
 import requests
 from sqlalchemy import func
 from starlette.responses import JSONResponse
 
-from api.models.Product import ProductModel, ProductCategoryModel
-from api.utils import utils
-from api.utils.utils import get_basket_id
-from db.database import SessionLocal, Product
+from web_service.api.models.Product import ProductModel, ProductCategoryModel
+from web_service.api.routers import product_router
+from web_service.api.utils import utils
+from web_service.api.utils.utils import get_basket_id
+from web_service.db.database import SessionLocal, Product
 
 
 def get_product(product_id: int):
@@ -73,6 +73,16 @@ def update_product(new_product: ProductModel):
 
         db.commit()
         return product
+    finally:
+        db.close()
+
+
+def update_all_products():
+    db = SessionLocal()
+    try:
+        ids = db.query(Product.nm_id).all()
+        for i in ids:
+            product_router.update_product(i)
     finally:
         db.close()
 
