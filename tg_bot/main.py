@@ -5,7 +5,7 @@ import aiogram
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command, CommandObject
 
-from tg_bot.handlers import product_handlers
+from tg_bot.handlers import product_handlers, stats_handlers
 
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token="6797248824:AAHnYKuwxGGFJ1OB2HYn5sM9vmstiAZXM_4")
@@ -31,7 +31,16 @@ async def main():
 
 if __name__ == "__main__":
     dp.message.register(product_handlers.cmd_get_product, Command("get_product", prefix="!"))
+    dp.message.register(product_handlers.cmd_get_all_products, Command("get_all", prefix="!"))
     dp.message.register(product_handlers.cmd_add_product, Command("add_product", prefix="!"))
     dp.message.register(product_handlers.cmd_delete_product, Command("delete_product", prefix="!"))
     dp.message.register(product_handlers.cmd_update_product, Command("update_product", prefix="!"))
+
+    dp.message.register(stats_handlers.cmd_get_product_history, Command("product_history", prefix="!"))
+    dp.message.register(stats_handlers.cmd_get_products_category_history, Command("product_category_history", prefix="!"))
+
+    dp.message.register(stats_handlers.cmd_get_products_count, Command("product_count", prefix="!"))
+    dp.message.register(stats_handlers.cmd_get_products_categories_count, Command("product_categories_count", prefix="!"))
+
+    dp.message.register(stats_handlers.cmd_get_product_min_max, Command("product_min-max", prefix="!"))
     asyncio.run(main())

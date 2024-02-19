@@ -1,7 +1,8 @@
+import io
 from datetime import datetime
 
 from fastapi import APIRouter
-from starlette.responses import JSONResponse
+from starlette.responses import Response
 
 from api.service import product_service
 
@@ -41,7 +42,10 @@ def get_products_line_chart(product_id: int):
                       xaxis_title='Дата',
                       yaxis_title='Цена (RUB)')
 
-    fig.show()
+    img_bytes = fig.to_image(format='png', engine="kaleido")
+    print(img_bytes)
+    return Response(content=img_bytes, media_type="image/png")
+    # fig.show()
 
 
 @stats_routes.get("/{product_id}/categories/graphics")
@@ -63,11 +67,13 @@ def get_products_categories_line_chart(product_id: int):
         prices = [int(d['price']['RUB']) for d in product_history]
         fig.add_trace(go.Scatter(x=dates, y=prices, mode='lines', name=p.name))
 
-    fig.update_layout(title='График изменения цены',
+    fig.update_layout(title=f'График изменения цены по категории {categories[0]["category"]}',
                       xaxis_title='Дата',
                       yaxis_title='Цена (RUB)')
 
-    fig.show()
+    img_bytes = fig.to_image(format='png', engine="kaleido")
+    return Response(content=img_bytes, media_type="image/png")
+    # fig.show()
 
 
 @stats_routes.get("/{product_id}/min-max")

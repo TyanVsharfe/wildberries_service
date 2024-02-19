@@ -70,7 +70,7 @@ def update_product(product_id: int):
         sale_price=product[0]["salePriceU"] / 100,
         rating=product[0]["rating"],
         feedbacks=product[0]["feedbacks"],
-        colors=product[0]["colors"][0]["name"],
+        colors=product[0]["colors"][0]["name"] if len(product[0]["colors"]) > 0 else None,
         category=categories[0],
         root_category=categories[1]
     )
