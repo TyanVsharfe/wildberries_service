@@ -29,25 +29,28 @@ def get_products():
 def create_product(new_product: ProductModel):
     db = SessionLocal()
     try:
-        product = Product(
-            nm_id=new_product.nm_id,
-            name=new_product.name,
-            brand=new_product.brand,
-            brand_id=new_product.brand_id,
-            site_brand_id=new_product.site_brand_id,
-            supplier_id=new_product.supplier_id,
-            sale=new_product.sale,
-            price=new_product.price,
-            sale_price=new_product.sale_price,
-            rating=new_product.rating,
-            feedbacks=new_product.feedbacks,
-            category=new_product.category,
-            root_category=new_product.root_category,
-            colors=new_product.colors
-        )
-        db.add(product)
-        db.commit()
-        return product
+        if db.query(Product).filter(Product.nm_id == new_product.nm_id).first() is not None:
+            return "Продукт уже находится в базе данных"
+        else:
+            product = Product(
+                nm_id=new_product.nm_id,
+                name=new_product.name,
+                brand=new_product.brand,
+                brand_id=new_product.brand_id,
+                site_brand_id=new_product.site_brand_id,
+                supplier_id=new_product.supplier_id,
+                sale=new_product.sale,
+                price=new_product.price,
+                sale_price=new_product.sale_price,
+                rating=new_product.rating,
+                feedbacks=new_product.feedbacks,
+                category=new_product.category,
+                root_category=new_product.root_category,
+                colors=new_product.colors
+            )
+            db.add(product)
+            db.commit()
+            return product
     finally:
         db.close()
 

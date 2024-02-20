@@ -44,7 +44,7 @@ async def cmd_get_all_products(message: types.Message):
         db = FSInputFile("all_db.json")
         await get_db_file(message, db)
         os.remove("all_db.json")
-        await message.answer(f"Некоторые записи из бд, абсолютно все записи в файле\n"
+        await message.answer(f"Некоторые записи из бд, абсолютно все записи в файле выше\n"
                              f"```json\n{json.dumps(json_response[:5], indent=4, ensure_ascii=False)} \n```",
                              parse_mode=ParseMode.MARKDOWN)
 
