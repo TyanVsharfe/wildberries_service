@@ -42,7 +42,10 @@ docker compose up -d
 ```
 
 ## Примеры
-
+### Работа команд
+![2024-02-19_17-20-00](https://github.com/TyanVsharfe/wildberries_service/assets/105783276/0b8cdae1-a2f1-4664-a6e8-3b2ee91bf1c4)
+![image](https://github.com/TyanVsharfe/wildberries_service/assets/105783276/4794cd59-ea65-4c5b-bb47-4ea234e1372b)
+![image](https://github.com/TyanVsharfe/wildberries_service/assets/105783276/87c57005-adbb-4af2-a923-9480afba5eeb)
 ### Графики
 ![coffee](https://github.com/TyanVsharfe/wildberries_service/assets/105783276/e13ff4b3-8c60-4615-8eab-60286ae0af49)
 ![vacuum_cleaner](https://github.com/TyanVsharfe/wildberries_service/assets/105783276/26e58c0d-85a6-4f07-8fef-2160a0790c22)
