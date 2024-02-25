@@ -85,7 +85,8 @@ def update_all_products():
     try:
         ids = db.query(Product.nm_id).all()
         for i in ids:
-            product_router.update_product(i)
+            print(f"Product ID: {i[0]}""")
+            product_router.update_product(i[0])
     finally:
         db.close()
 

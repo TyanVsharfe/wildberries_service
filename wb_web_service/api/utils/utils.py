@@ -14,11 +14,16 @@ def get_product_card(product_id):
         return product
     else:
         print("Ошибка при получении товара:", response.status_code)
+        return None
 
 
 def get_product_model(product_id):
     product = get_product_card(product_id)
     categories = get_product_category(product_id)
+
+    if product or categories is None:
+        ValueError("Неверный ID товара")
+        return {"Error": "Неверный ID товара"}
 
     product_model = ProductModel(
         nm_id=product[0]["id"],
@@ -41,7 +46,11 @@ def get_product_model(product_id):
 
 
 def get_product_category(product_id):
-    url = f"https://basket-{get_basket_id(product_id)}.wbbasket.ru/vol{product_id // 100000}/part{product_id // 1000}/{product_id}/info/ru/card.json"
+    b_id = get_basket_id(product_id)
+    if b_id is None:
+        ValueError("Неверный ID товара")
+        return None
+    url = f"https://basket-{b_id}.wbbasket.ru/vol{product_id // 100000}/part{product_id // 1000}/{product_id}/info/ru/card.json"
     print(url)
     response = requests.get(url)
 
@@ -92,6 +101,8 @@ def get_basket_id(product_id: int) -> str:
         basket = "16"
     elif 2896 <= short_id <= 3139:
         basket = "17"
+    else:
+        basket = None
 
     return basket
 

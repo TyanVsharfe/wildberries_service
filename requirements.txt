@@ -9,3 +9,5 @@ aiogram~=3.4.1
 kaleido==0.2.1
 python-dotenv~=1.0.1
 psycopg2
+redis==4.5.4
+celery~=5.3.6

@@ -1,6 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Body
+from starlette.responses import JSONResponse
 
-from wb_web_service.api.service import product_service
+from wb_web_service.api.service import product_service, celery_service
 from wb_web_service.api.utils.utils import get_product_model
 
 product_routes = APIRouter()
@@ -43,3 +44,11 @@ def update_product(product_id: int):
                        description="Delete product from the database by product id.")
 def delete_product(product_id: int):
     product_service.delete_product(product_id)
+
+
+@product_routes.post("/tasks/update",
+                     description="Update all products from database")
+def update_all_product():
+    print("Update all products from database")
+    task = celery_service.update_all_products_task()
+    return task

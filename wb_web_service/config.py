@@ -7,6 +7,8 @@ load_dotenv()
 
 class Settings:
     BOT_TOKEN = os.getenv("BOT_TOKEN")
+    CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
+    CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
 
     DB_USER = os.getenv("DB_USER")
     DB_PASSWORD = os.getenv("DB_PASSWORD")
